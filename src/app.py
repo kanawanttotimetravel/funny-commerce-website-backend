@@ -1,10 +1,14 @@
 from flask import Flask
 from insert_product_route import insert_product_bp
 from delete_product_route import delete_product_bp
+from update_product_route import update_product_bp
+from search_product_route import search_product_bp
 app = Flask(__name__)
 
 app.register_blueprint(insert_product_bp)
 app.register_blueprint(delete_product_bp)
+app.register_blueprint(update_product_bp)
+app.register_blueprint(search_product_bp)
 
 @app.route('/')
 def hello_world():

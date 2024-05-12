@@ -9,6 +9,16 @@ client = pymongo.MongoClient(mongo_uri)
 db = client["shop_manager"]
 products = db["products"]
 
+@delete_product_bp.route('/Delete-product', methods=['GET'])
+def render_products():
+    product_list = list(products.find())
+
+    for product in product_list:
+        product['_id'] = str(product['_id'])
+
+    return jsonify(product_list)
+
+
 @delete_product_bp.route('/Delete-product/<string:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     if not ObjectId.is_valid(product_id):
