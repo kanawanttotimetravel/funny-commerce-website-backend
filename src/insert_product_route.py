@@ -8,6 +8,7 @@ client = pymongo.MongoClient(mongo_uri)
 db = client["shop_manager"]
 products = db["products"]
 
+
 @insert_product_bp.route('/Insert-product', methods=['POST']) 
 def insert_product():
     product_data = request.json

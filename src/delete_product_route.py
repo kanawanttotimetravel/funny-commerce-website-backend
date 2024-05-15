@@ -9,6 +9,7 @@ client = pymongo.MongoClient(mongo_uri)
 db = client["shop_manager"]
 products = db["products"]
 
+
 @delete_product_bp.route('/Delete-product/<string:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     if not ObjectId.is_valid(product_id):
