@@ -1,11 +1,11 @@
-import json
 import os
 from dotenv import load_dotenv
 
 from flask import jsonify, request, Blueprint
 import pymongo
-from bson import json_util
-from bson.objectid import ObjectId
+from utils import parse_json
+
+load_dotenv()
 
 client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
 db = client['shop_manager']
@@ -33,15 +33,14 @@ def register():
     data = request.json
     query = {'username': data['username']}
     if accounts.find_one(query):
-        return json.loads(json_util.dumps({
+        return parse_json({
             'message': 'This username is already taken'
-        }))
+        })
     result = accounts.insert_one(data)
-    # print(result.inserted_id)
-    return json.loads(json_util.dumps({
+    return parse_json({
         'message': 'ok',
-        'userId': result.inserted_id
-    }))
+        'userId': str(result.inserted_id)
+    })
 
 
 @authentication_bp.route('/login', methods=['GET'])
@@ -64,10 +63,13 @@ def login():
         'username': data['username'],
         'password': data['password']
     }
-    if accounts.find_one(query):
-        return json.loads(json_util.dumps({
-            'message': 'ok'
-        }))
-    return json.loads(json_util.dumps({
+    result = accounts.find_one(query)
+    if result:
+        return parse_json({
+            'message': 'ok',
+            'userId': str(result['_id'])
+        })
+
+    return parse_json({
                 'message': 'Invalid username or password'
-            }))
+            })
