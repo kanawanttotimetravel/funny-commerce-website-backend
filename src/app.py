@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+
 from flask import Flask
 from insert_product_route import insert_product_bp
 from delete_product_route import delete_product_bp
@@ -5,6 +7,8 @@ from authentication import authentication_bp
 from user_management import user_management_bp
 from update_product_route import update_product_bp
 from search_product_route import search_product_bp
+
+load_dotenv()
 app = Flask(__name__)
 
 app.register_blueprint(insert_product_bp)

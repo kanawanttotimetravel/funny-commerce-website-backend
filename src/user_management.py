@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 from flask import request, Blueprint
 import pymongo
@@ -7,7 +6,6 @@ from bson.objectid import ObjectId
 
 from utils import parse_json
 
-load_dotenv()
 
 client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
 db = client['shop_manager']
