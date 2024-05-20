@@ -3,13 +3,10 @@ from dotenv import load_dotenv
 
 from flask import jsonify, request, Blueprint
 import pymongo
-from utils import parse_json
+from utils import parse_json, users
 
 load_dotenv()
 
-client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
-db = client['shop_manager']
-accounts = db['accounts']
 
 authentication_bp = Blueprint('authentication', __name__)
 
@@ -32,11 +29,11 @@ def register():
     """
     data = request.json
     query = {'username': data['username']}
-    if accounts.find_one(query):
+    if users.find_one(query):
         return parse_json({
             'message': 'This username is already taken'
         })
-    result = accounts.insert_one(data)
+    result = users.insert_one(data)
     return parse_json({
         'message': 'ok',
         'userId': str(result.inserted_id)
@@ -63,7 +60,7 @@ def login():
         'username': data['username'],
         'password': data['password']
     }
-    result = accounts.find_one(query)
+    result = users.find_one(query)
     if result:
         return parse_json({
             'message': 'ok',

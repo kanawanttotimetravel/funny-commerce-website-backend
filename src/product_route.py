@@ -3,13 +3,10 @@ from flask import jsonify, Blueprint, request
 import pymongo
 from bson.objectid import ObjectId
 
+from utils import users, products, parse_json
+
 product_bp = Blueprint('Product', __name__)
 
-mongo_uri = os.environ.get("MONGO_URI")
-client = pymongo.MongoClient(mongo_uri)
-db = client["shop_manager"]
-products = db["products"]
-users = db["users"]
 
 @product_bp.route('/Product/<string:product_id>/user/<string:user_id>', methods=['GET'])
 def product(product_id, user_id):
@@ -26,3 +23,7 @@ def product(product_id, user_id):
 
     return jsonify(combined_info)
 
+@product_bp.route('/Product/all', methods=['GET'])
+def get_all_products():
+    data = products.find()
+    return parse_json(data)
