@@ -15,13 +15,19 @@ def hello_pm():
     return 'Hello Kana'
 
 
-@user_management_bp.route('/user/<string:user_id>', methods=['GET'])
+@user_management_bp.route('/user/get/<string:user_id>', methods=['GET'])
 def get_user(user_id):
     user = users.find_one({'_id': ObjectId(user_id)})
     return parse_json(user)
 
 
-@user_management_bp.route('/user/<string:user_id>', methods=['POST'])
+@user_management_bp.route('/user/all', methods=['GET'])
+def get_all_users():
+    all_users = users.find()
+    return parse_json(all_users)
+
+
+@user_management_bp.route('/user/set/<string:user_id>', methods=['POST'])
 def set_user_profile(user_id):
     data = request.json
     uid = {'_id': ObjectId(user_id)}
