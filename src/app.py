@@ -7,6 +7,7 @@ from authentication import authentication_bp
 from user_management import user_management_bp
 from update_product_route import update_product_bp
 from search_product_route import search_product_bp
+from product_route import product_bp
 
 load_dotenv()
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app.register_blueprint(authentication_bp)
 app.register_blueprint(user_management_bp)
 app.register_blueprint(update_product_bp)
 app.register_blueprint(search_product_bp)
+app.register_blueprint(product_bp)
 @app.route('/')
 def hello_world():
     return 'Hello World!!!'
