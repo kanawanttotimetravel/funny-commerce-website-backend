@@ -1,8 +1,10 @@
 import os
 import json
 from bson import json_util
-
+import dotenv
 import pymongo
+
+dotenv.load_dotenv()
 
 MONGO_URI = os.environ.get("MONGO_URI")
 MONGO_CLIENT = pymongo.MongoClient(MONGO_URI)

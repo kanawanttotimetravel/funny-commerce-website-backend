@@ -1,5 +1,6 @@
 import os
 from flask import jsonify, Blueprint, request
+from flask_cors import CORS, cross_origin
 import pymongo
 from bson.objectid import ObjectId
 
@@ -8,20 +9,21 @@ from utils import users, products, parse_json
 product_bp = Blueprint('Product', __name__)
 
 
-@product_bp.route('/Product/<string:product_id>/user/<string:user_id>', methods=['GET'])
-def product(product_id, user_id):
-    user_info = users.find_one({'_id': ObjectId(user_id)})
 
-    current_product = products.find_one({'_id': ObjectId(product_id)})
-
-    current_product['_id'] = str(current_product['_id'])
-
-    combined_info = {
-        'product': current_product,
-        'user': user_info
-    }
-
-    return jsonify(combined_info)
+# @product_bp.route('/Product/<string:product_id>/user/<string:user_id>', methods=['GET'])
+# def product(product_id, user_id):
+#     user_info = users.find_one({'_id': ObjectId(user_id)})
+#
+#     current_product = products.find_one({'_id': ObjectId(product_id)})
+#
+#     current_product['_id'] = str(current_product['_id'])
+#
+#     combined_info = {
+#         'product': current_product,
+#         'user': user_info
+#     }
+#
+#     return jsonify(combined_info)
 
 
 @product_bp.route('/Product/all', methods=['GET'])
@@ -29,6 +31,20 @@ def get_all_products():
     all_products = products.find()
     return parse_json(all_products)
 
+
+@product_bp.route('/Product/<string:product_id>/', methods=['GET'])
+def product(product_id):
+    product = products.find_one({'_id': ObjectId(product_id)})
+    res = {
+        'itemId': str(product['_id']),
+        'itemName': product['product_name'],
+        'itemAmount': product['amount'],
+        'imageSrc':  product['image'] if isinstance(product['image'], str) else product['image'][0],
+        'itemType': product['categories'],
+        'price': product['price'],
+        'itemInfo': product['info']
+    }
+    return parse_json(res)
 
 def iterate_by_chunks(collection, chunksize=1, start_from=0, query={}, projection={}):
     chunks = range(start_from, collection.count_documents(query), int(chunksize))
@@ -45,11 +61,22 @@ def get_chunk(generator, n):
     return next(generator)
 
 
-@product_bp.route('/Product/page', methods=['GET'])
+@product_bp.route('/Product/page', methods=['POST'])
+@cross_origin()
 def get_product_by_pages():
     data = request.json
-    chunksize = data['size']
+    chunk_size = data['size']
     page = data['page']
-    gen = iterate_by_chunks(products, chunksize=chunksize)
+    page_count = products.count_documents({}) // chunk_size + 1
+    gen = iterate_by_chunks(products, chunksize=chunk_size)
     res = get_chunk(gen, page)
-    return parse_json(res)
+    product_list = [{
+        'itemId': str(product['_id']),
+        'itemName': product['product_name'],
+        'itemAmount': product['amount'],
+        'imageSrc':  product['image'] if isinstance(product['image'], str) else product['image'][0],
+        'itemType': product['categories'],
+        'price': product['price'],
+        'itemInfo': product['info']
+    } for product in res]
+    return parse_json({'page_count': page_count,'data': product_list})
