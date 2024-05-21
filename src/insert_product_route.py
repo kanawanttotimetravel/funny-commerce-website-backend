@@ -2,12 +2,10 @@ import os
 from flask import jsonify, request, Blueprint
 import pymongo
 
+from utils import products
+
 insert_product_bp = Blueprint('Insert-product', __name__)
 
-mongo_uri = os.environ.get("MONGO_URI")
-client = pymongo.MongoClient(mongo_uri)
-db = client["shop_manager"]
-products = db["products"]
 
 
 @insert_product_bp.route('/Insert-product', methods=['GET','POST'])

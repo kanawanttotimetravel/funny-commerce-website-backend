@@ -3,12 +3,11 @@ from flask import jsonify, Blueprint
 import pymongo
 from bson.objectid import ObjectId
 
+from utils import products
+
 delete_product_bp = Blueprint('Delete-product', __name__)
 
-mongo_uri = os.environ.get("MONGO_URI")
-client = pymongo.MongoClient(mongo_uri)
-db = client["shop_manager"]
-products = db["products"]
+
 
 @delete_product_bp.route('/Delete-product', methods=['GET'])
 def render_products():

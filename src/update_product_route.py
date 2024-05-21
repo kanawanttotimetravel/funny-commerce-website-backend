@@ -3,12 +3,10 @@ from flask import jsonify, Blueprint, request
 import pymongo
 from bson.objectid import ObjectId
 
+from utils import products
+
 update_product_bp = Blueprint('Update-product', __name__)
 
-mongo_uri = os.environ.get("MONGO_URI")
-client = pymongo.MongoClient(mongo_uri)
-db = client["shop_manager"]
-products = db["products"]
 
 @update_product_bp.route('/Update-product', methods=['GET'])
 def render_products():
