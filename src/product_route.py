@@ -6,8 +6,9 @@ from bson.objectid import ObjectId
 
 from utils import users, products, parse_json
 
-product_bp = Blueprint('Product', __name__)
+from recommender import rcm
 
+product_bp = Blueprint('Product', __name__)
 
 
 # @product_bp.route('/Product/<string:product_id>/user/<string:user_id>', methods=['GET'])
@@ -25,6 +26,17 @@ product_bp = Blueprint('Product', __name__)
 #
 #     return jsonify(combined_info)
 
+def conversion(product):
+    return {
+        'itemId': str(product['_id']),
+        'itemName': product['product_name'],
+        'itemAmount': product['amount'],
+        'imageSrc': product['image'] if isinstance(product['image'], str) else product['image'][0],
+        'itemType': product['categories'],
+        'price': product['price'],
+        'itemInfo': product['info']
+    }
+
 
 @product_bp.route('/Product/all', methods=['GET'])
 def get_all_products():
@@ -35,16 +47,25 @@ def get_all_products():
 @product_bp.route('/Product/<string:product_id>/', methods=['GET'])
 def product(product_id):
     product = products.find_one({'_id': ObjectId(product_id)})
-    res = {
-        'itemId': str(product['_id']),
-        'itemName': product['product_name'],
-        'itemAmount': product['amount'],
-        'imageSrc':  product['image'] if isinstance(product['image'], str) else product['image'][0],
-        'itemType': product['categories'],
-        'price': product['price'],
-        'itemInfo': product['info']
-    }
+    return parse_json(conversion(product))
+
+
+
+@product_bp.route('/Product/<string:product_id>/related', methods=['GET'])
+def related_product(product_id):
+    related = rcm.most_similar(product_id)
+    res = [conversion(products.find_one({'_id': ObjectId(id)})) for id in related]
     return parse_json(res)
+
+
+@product_bp.route('/recommend', methods=['POST'])
+def recommend():
+    data = request.get_json()
+    user_id = data['user_id']
+    recommendations = rcm.recommend(user_id)
+    res = [conversion(products.find_one({'_id': ObjectId(id)})) for id in recommendations]
+    return parse_json(res)
+
 
 def iterate_by_chunks(collection, chunksize=1, start_from=0, query={}, projection={}):
     chunks = range(start_from, collection.count_documents(query), int(chunksize))
@@ -70,13 +91,8 @@ def get_product_by_pages():
     page_count = products.count_documents({}) // chunk_size + 1
     gen = iterate_by_chunks(products, chunksize=chunk_size)
     res = get_chunk(gen, page)
-    product_list = [{
-        'itemId': str(product['_id']),
-        'itemName': product['product_name'],
-        'itemAmount': product['amount'],
-        'imageSrc':  product['image'] if isinstance(product['image'], str) else product['image'][0],
-        'itemType': product['categories'],
-        'price': product['price'],
-        'itemInfo': product['info']
-    } for product in res]
-    return parse_json({'page_count': page_count,'data': product_list})
+    product_list = [conversion(product) for product in res]
+    return parse_json({
+        'page_count': page_count,
+        'data': product_list}
+    )

@@ -116,7 +116,8 @@ class RecommendationSystem(object):
         item_i = self.item_lists.index(iid)
         most_similar = self.similarities_matrix.iloc[item_i].sort_values(ascending=False)
         item_indexes = most_similar.head(10).index.astype(int).to_list()
-        return [self.item_lists[index] for index in item_indexes]
+        res = [self.item_lists[index] for index in item_indexes]
+        return res[1:5]
 
     def predict(self, uid, item_i):
         """Predict the rating of a user for an item
@@ -166,12 +167,16 @@ class RecommendationSystem(object):
         return [self.item_lists[rcm[1]] for rcm in recommend]
 
 
-if __name__ == '__main__':
-    rcm = RecommendationSystem(similarities_matrix_file='../data/similarities_matrix.csv')
-    rcm.read_csv('../data/ratings.csv')
-    rcm.matrix_construction()
-    rcm.similarities()
+rcm = RecommendationSystem(similarities_matrix_file='data/similarities_matrix.csv')
+rcm.read_csv('data/ratings.csv')
+rcm.matrix_construction()
+rcm.similarities()
 
+# if __name__ == '__main__':
+#     rcm = RecommendationSystem(similarities_matrix_file='../data/similarities_matrix.csv')
+#     rcm.read_csv('../data/ratings.csv')
+#     rcm.matrix_construction()
+#     rcm.similarities()
     # rcm.read_csv('user_item_rating.csv')
     # rcm.matrix_construction()
     # rcm.similarities()
