@@ -33,7 +33,7 @@ def conversion(product):
         'itemAmount': product['amount'],
         'imageSrc': product['image'] if isinstance(product['image'], str) else product['image'][0],
         'itemType': product['categories'],
-        'price': product['price'],
+        'price': product['price'] * 25000,
         'itemInfo': product['info']
     }
 
@@ -48,7 +48,6 @@ def get_all_products():
 def product(product_id):
     product = products.find_one({'_id': ObjectId(product_id)})
     return parse_json(conversion(product))
-
 
 
 @product_bp.route('/Product/<string:product_id>/related', methods=['GET'])
@@ -94,5 +93,5 @@ def get_product_by_pages():
     product_list = [conversion(product) for product in res]
     return parse_json({
         'page_count': page_count,
-        'data': product_list}
-    )
+        'data': product_list
+    })

@@ -163,7 +163,7 @@ class RecommendationSystem(object):
             if self.rating_matrix.iloc[user_u, item_i] == 0:
                 recommend.append((self.predict(uid, item_i), item_i))
         recommend.sort(reverse=True)
-        recommend = recommend[:10]
+        recommend = recommend[1:9]
         return [self.item_lists[rcm[1]] for rcm in recommend]
 
 
