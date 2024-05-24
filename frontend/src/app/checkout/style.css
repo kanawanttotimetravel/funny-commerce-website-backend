@@ -1,0 +1,133 @@
+.box {
+    position: relative;
+    padding: 20px;
+    justify-content: center;
+    display: flex;
+}
+
+.billing-payment-container {
+    left: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.billing-details-container {
+    padding: 10px;
+    margin: 10px;
+}
+
+.billing-details-container >p{
+    color: #000000;
+    font-family: "Poppins-SemiBold", Helvetica;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+}
+
+.name-container {
+    display: flex;
+}
+
+.more-infomation-container {
+    display: block;
+}
+
+.payment-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+}
+
+.payment-details {
+    justify-content: center;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.product-subtotal {
+    display: flex;
+    justify-content: space-between;
+    color: #000000;
+    font-family: "Poppins-Medium", Helvetica;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: normal;
+}
+
+.product-row {
+    display: flex;
+    justify-content: space-between;
+}
+  
+.product-name-text {
+    color: #9f9f9f;
+    font-family: "Poppins-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+}
+.productname-price {
+
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+#total {
+    color: #000000;
+    font-family: "Poppins-Regular", Helvetica;
+    font-weight: bold;
+    line-height: normal;
+}
+
+#price {
+    color: #b88e2f;
+    font-family: "Poppins-Bold", Helvetica;
+    font-weight: 700;
+}
+
+.payment-methods {
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.descript {
+    margin-top: 10px;
+    color: #000000;
+    font-family: "Poppins-Light", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+    text-align: justify;
+    width: 29rem;
+}
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-wrapper >button {
+    margin: 30px;
+    background: transparent;
+    border: 1px solid;
+    border-color: #000000;
+    border-radius: 15px;
+    height: 64px;
+    width: 318px;
+    cursor: pointer;
+    position: relative;
+}
+
+.button-wrapper >button:hover {
+    background-color: rgb(241, 240, 240);
+}
+
+.button-wrapper >button:active {
+    color: #585858;
+}

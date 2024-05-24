@@ -1,0 +1,61 @@
+.profile-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 16px;
+  }
+  
+.profile-header {
+  display: flex;
+  justify-content: left;
+  padding: 30px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e4fd05;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 20rem;
+  height: 20rem;
+}
+
+.profile-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.edit-button {
+  background-color: #f0ad4e;
+  border: 1px solid #b1b1b1;
+  color: white;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-profile-form {
+  display: grid;
+  gap: 16px;
+  margin: 16px;
+}
+
+.save-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-button {
+  background-color: #e5ff00e3;
+  color: rgb(61, 61, 61);
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid #272727;
+}
+
+.save-button:hover {
+  background-color: #9b9b9b;
+}

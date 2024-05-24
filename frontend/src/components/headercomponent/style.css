@@ -1,0 +1,80 @@
+.header {
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.header .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 8%;
+}
+
+.header .logo >a {
+    background: none;
+    border: none;
+    color: #000000;
+    font-family: "Montserrat-Bold", Helvetica;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.header .logo >p:active {
+    color: grey;
+}
+
+.header .hcenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .hlist {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .hlist >li{
+    padding: 20px;
+    list-style-type: none;
+}
+
+.header .logo a,
+.header .hlist a {
+    text-decoration: none;
+    color: inherit; /* Giữ màu chữ như đã được định nghĩa */
+}
+
+.header .hright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .text-wrapper {
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #000000;
+    font-family: "Poppins-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.header .text-wrapper:hover {
+    background-color: rgb(241, 240, 240);
+}
+.header .text-wrapper:active {
+    color: grey;
+}
+
+.header .icon {
+    cursor: pointer;
+}
