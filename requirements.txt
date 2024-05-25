@@ -2,4 +2,6 @@ pymongo
 flask
 flask-cors
 python-dotenv
-bson.objectid
+numpy
+pandas
+tqdm
