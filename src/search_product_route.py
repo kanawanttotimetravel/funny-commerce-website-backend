@@ -22,5 +22,6 @@ def search_product(query):
     
     for product in search_results:
         product['_id'] = str(product['_id'])
+        product['price'] = product['price'] * 300
 
     return jsonify(search_results)

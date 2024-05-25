@@ -155,7 +155,7 @@ class RecommendationSystem(object):
         """
         if uid not in self.senior_users:
             print('Nani????')
-            recommend = self.high_rating()
+            return self.high_rating()
         else:
             user_u = self.senior_users.index(uid)
             recommend = []
