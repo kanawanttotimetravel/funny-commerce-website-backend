@@ -47,14 +47,23 @@ class AppTestCase(unittest.TestCase):
         assert data['type'] == 'buyer'
 
     def test_get_all_product(self):
-        response = self.client.post("/get", headers={
+        response = self.client.get("/Product/all", headers={
             'Content-type': 'application/json',
             'Accept': 'application/json'
         })
         assert response.status_code == 200
-        data = response.json
-        assert data['message'] == 'ok'
-        assert data['type'] == 'buyer'
+
+    def test_recommend(self):
+        dummy_user = '664ac9b30fd31c1e38c81dbe'
+        response = self.client.post('/recommend', headers={
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        }, json={
+            "user_id": dummy_user
+        })
+
+        assert response.status_code == 200
+
 
 if __name__ == "__main__":
     unittest.main()
