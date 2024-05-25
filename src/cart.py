@@ -43,3 +43,29 @@ def get_from_cart():
         'message': 'ok',
         'data': res
     })
+
+@cart_bp.route('/cart/remove', methods=['POST'])
+def remove_from_cart():
+    data = request.json
+    user_id = data['user_id']
+    item_id = data['item_id']
+    print(user_id, item_id)
+    carts.delete_many({'user_id': user_id, 'item_id': item_id})
+    return parse_json({
+        'message': 'ok'
+    })
+
+@cart_bp.route('/cart/update', methods=['POST'])
+def update_quantity():
+    data = request.json
+    item_list = data['item_list']
+    user_id = data['user_id']
+    print(data)
+    for item in item_list:
+        item_id = item['id']
+        quantity = item['quantity']
+        query = {'user_id': user_id, 'item_id': item_id}
+        carts.update_one(query, {'$set': {'quantity':quantity}})
+    return parse_json({
+        'message': 'ok'
+    })

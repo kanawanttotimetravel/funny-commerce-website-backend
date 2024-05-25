@@ -33,7 +33,7 @@ def conversion(product):
         'itemAmount': product['amount'],
         'imageSrc': product['image'] if isinstance(product['image'], str) else product['image'][0],
         'itemType': product['categories'],
-        'price': product['price'],
+        'price': product['price'] * 300,
         'itemInfo': product['info']
     }
 
@@ -94,5 +94,5 @@ def get_product_by_pages():
     product_list = [conversion(product) for product in res]
     return parse_json({
         'page_count': page_count,
-        'data': product_list}
-    )
+        'data': product_list
+    })

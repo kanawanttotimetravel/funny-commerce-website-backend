@@ -59,7 +59,7 @@ class RecommendationSystem(object):
         sum = self.rating_matrix.sum()
         count = (self.rating_matrix > 0).astype(float).sum(axis=0)
         rating = (sum / count).fillna(0).sort_values(ascending=False)
-        return rating.head(10).index.to_list()
+        return rating.head(12).index.to_list()
 
     def adjusted_cosine(self, item_i, item_j):
         """Calculate the adjusted cosine between items
@@ -155,15 +155,16 @@ class RecommendationSystem(object):
         """
         if uid not in self.senior_users:
             print('Nani????')
-            return self.high_rating()
-        user_u = self.senior_users.index(uid)
-        recommend = []
-        n_items = len(self.rating_matrix.columns)
-        for item_i in range(n_items):
-            if self.rating_matrix.iloc[user_u, item_i] == 0:
-                recommend.append((self.predict(uid, item_i), item_i))
-        recommend.sort(reverse=True)
-        recommend = recommend[:10]
+            recommend = self.high_rating()
+        else:
+            user_u = self.senior_users.index(uid)
+            recommend = []
+            n_items = len(self.rating_matrix.columns)
+            for item_i in range(n_items):
+                if self.rating_matrix.iloc[user_u, item_i] == 0:
+                    recommend.append((self.predict(uid, item_i), item_i))
+            recommend.sort(reverse=True)
+            recommend = recommend[:12]
         return [self.item_lists[rcm[1]] for rcm in recommend]
 
 
