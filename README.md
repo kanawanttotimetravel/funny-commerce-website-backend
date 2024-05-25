@@ -8,11 +8,16 @@ We are a team consists of 4 students from Institute of Artificial Intelligence, 
 - Đỗ Ngọc Anh 22022577
 - Nguyền Bình Minh 22022579
 
-# Server activation
+# Manuals
+## Prerequisites
+- First, create an `.env` which specify:
+  - `MONGO_URI` The path to your MongoDB server
+  - ...
 - To install the necessary packages:
 ```
 pip install -r requirements.txt
 ```
+## Activation
 - To run the server:
 ``` 
 python src\app.py

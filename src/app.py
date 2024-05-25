@@ -13,6 +13,7 @@ from update_product_route import update_product_bp
 from search_product_route import search_product_bp
 from product_route import product_bp
 from rating_route import rating_bp
+from cart import cart_bp
 
 load_dotenv()
 app = Flask(__name__)
@@ -28,6 +29,7 @@ app.register_blueprint(update_product_bp)
 app.register_blueprint(search_product_bp)
 app.register_blueprint(product_bp)
 app.register_blueprint(rating_bp)
+app.register_blueprint(cart_bp)
 
 @app.route('/')
 def hello_world():

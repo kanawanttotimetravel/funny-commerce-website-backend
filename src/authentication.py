@@ -64,7 +64,8 @@ def login():
     if result:
         return parse_json({
             'message': 'ok',
-            'userId': str(result['_id'])
+            'userId': str(result['_id']),
+            'type': result['type']
         })
 
     return parse_json({
