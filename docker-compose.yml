@@ -7,7 +7,10 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
-    command: ["npm", "run", "dev"]
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
 
   backend:
     build:
@@ -18,4 +21,4 @@ services:
       - ./backend:/app
     environment:
       - FLASK_ENV=development
-    command: ["python", "src/app.py"]
+    command: python src/app.py
