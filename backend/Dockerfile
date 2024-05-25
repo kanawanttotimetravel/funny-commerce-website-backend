@@ -7,6 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src ./src
 
+COPY data ./data
+
 ENV PYTHONPATH="${PYTHONPATH}:/app/src"
 
 CMD ["python", "src/app.py"]
